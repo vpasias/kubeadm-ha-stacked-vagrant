@@ -73,26 +73,30 @@ Vagrant.configure("2") do |config|
 
   config.vm.box               = BOX_IMAGE
   config.vm.box_check_update  = false
-
+  config.disksize.size        = "100GB"
   config.vbguest.auto_update  = false
 
   config.vm.provider "virtualbox" do |vbox|
-    vbox.cpus           = 1
-    vbox.memory         = "1024"
+    vbox.cpus           = 2
+    vbox.memory         = "8192"
     vbox.linked_clone   = true
+    vbox.customize ["modifyvm", :id, "--chipset", "ich9"]
+    vbox.customize ['modifyvm', :id, '--nested-hw-virt', 'on']
+    vbox.customize ["setextradata", :id, "VBoxInternal/CPUM/SSE4.1", "1"]
+    vbox.customize ["setextradata", :id, "VBoxInternal/CPUM/SSE4.2", "1"]
   end
 
   config.hostmanager.enabled = true
   config.hostmanager.manage_guest = true
-
+  
   (1..LB_COUNT).each do |i|
     config.vm.define "lb0#{i}" do |lb|
       lb.vm.box      = "lb"
       lb.vm.hostname = "lb0#{i}"
       lb.vm.network :private_network, ip: LB_IP_PREFIX + "#{i}"
       lb.vm.provider :virtualbox do |vbox|
-        vbox.cpus   = 1
-        vbox.memory = 512
+        vbox.cpus   = 2
+        vbox.memory = 8192             
       end
       lb.vm.provision :shell, inline: $loadbalancer
     end
@@ -103,25 +107,47 @@ Vagrant.configure("2") do |config|
       controller.vm.hostname = "c0#{i}"
       controller.vm.network :private_network, ip: CONTROLLER_IP_PREFIX + "#{i}"
       controller.vm.provider :virtualbox do |vbox|
-        vbox.cpus   = 2
-        vbox.memory = 2048
+        vbox.cpus   = 4
+        vbox.memory = 16384
+        file_to_disk = "c0#{i}.vmdk"
+        unless File.exist?(file_to_disk)
+	      vbox.customize [ "createmedium", "disk", "--filename", "c0#{i}.vmdk", "--format", "vmdk", "--size", 1024 * 120 ]
+        end
+        vb.customize [ "storageattach", name , "--storagectl", "SATA Controller", "--port", "1", "--device", "0", "--type", "hdd", "--medium", "c0#{i}.vmdk"]
       end
+    end
+  end
+  
+  (1..CONTROLLER_COUNT).each do |i|
+    config.vm.define "c0#{i}" do |controller|
+      controller.vm.provision :shell, path: "disk-extend.sh"
       if i == 1
         controller.vm.provision :shell, inline: $initcontroller
       else
         controller.vm.provision :shell, inline: $joincontroller
       end
     end
-  end
+  end  
 
   (1..EXECUTOR_COUNT).each do |i|
     config.vm.define "e0#{i}" do |executor|
       executor.vm.hostname = "e0#{i}"
       executor.vm.network :private_network, ip: EXECUTOR_IP_PREFIX + "#{i}"
       executor.vm.provider :virtualbox do |vbox|
-        vbox.cpus   = 1
-        vbox.memory = 1024
+        vbox.cpus   = 8
+        vbox.memory = 32768
+        file_to_disk = "e0#{i}.vmdk"
+        unless File.exist?(file_to_disk)
+	      vbox.customize [ "createmedium", "disk", "--filename", "e0#{i}.vmdk", "--format", "vmdk", "--size", 1024 * 120 ]
+        end
+        vb.customize [ "storageattach", name , "--storagectl", "SATA Controller", "--port", "1", "--device", "0", "--type", "hdd", "--medium", "e0#{i}.vmdk"]
       end
+    end
+  end
+  
+  (1..EXECUTOR_COUNT).each do |i|
+    config.vm.define "e0#{i}" do |executor|
+      executor.vm.provision :shell, path: "disk-extend.sh"     
       executor.vm.provision :shell, inline: $joinexecutor
     end
   end
