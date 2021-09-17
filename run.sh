@@ -19,7 +19,15 @@ KUBERNETES_VERSION=${KUBERNETES_VERSION} vagrant up
 
 sleep 60
 
-vagrant ssh c01 -c "sudo kubectl get nodes"
+vagrant ssh c01 -c "sudo kubectl get nodes -o wide --all-namespaces"
+
+vagrant ssh c01 -c "sudo kubectl get pods -o wide --all-namespaces"
+
+vagrant ssh c01 -c "sudo kubectl get pods -n openebs"
+
+vagrant ssh c01 -c "sudo kubectl get sc"
+
+vagrant ssh c01 -c "sudo kubectl get blockdevice -n openebs"
 
 # vagrant ssh c01 -c "sudo kubectl describe nodes"
 
@@ -28,5 +36,3 @@ vagrant ssh c01 -c "sudo kubectl get nodes"
 # vagrant ssh c01 -c "sudo journalctl -xeu kubelet"
 
 # vagrant ssh c01 -c "sudo systemctl status containerd"
-
-# vagrant ssh c01 -c "sudo kubectl get pods --all-namespaces"
