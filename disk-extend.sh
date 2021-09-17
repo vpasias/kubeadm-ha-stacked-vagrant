@@ -36,4 +36,5 @@ sudo lvextend -l +100%FREE $LV_PATH
 sudo resize2fs -p $FS_PATH
 ROOT_FS_SIZE=`df -h / | sed -n 2p | awk '{print $2;}'`
 echo "The root file system (/) has a size of $ROOT_FS_SIZE"
+sleep 10
 exit 0
