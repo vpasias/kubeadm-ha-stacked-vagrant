@@ -7,7 +7,12 @@ sudo fdisk -l | grep 'Disk /dev/sd*'
 git clone --branch v1.7.3 https://github.com/rook/rook.git && cd rook/cluster/examples/kubernetes/ceph
 
 kubectl create -f crds.yaml -f common.yaml -f operator.yaml
+
+sleep 120
+
 kubectl create -f cluster.yaml
+
+sleep 300
 
 kubectl apply -f ./csi/rbd/storageclass.yaml
 
