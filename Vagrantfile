@@ -142,12 +142,14 @@ Vagrant.configure("2") do |config|
       executor.vm.provision :shell, inline: $joinexecutor	    
     end
   end
-	
+
+# Additional functions/appiliacations	
   (1..CONTROLLER_COUNT).each do |i|
     config.vm.define "c0#{i}" do |controller|
       if i == 1
       #	controller.vm.provision :shell, path: "openebs-install.sh"
-      controller.vm.provision :shell, path: "rook-install.sh"      
+      controller.vm.provision :shell, path: "rook-install.sh"
+      controller.vm.provision :shell, path: "monitoring-install.sh"	      
       end	    
     end
   end
