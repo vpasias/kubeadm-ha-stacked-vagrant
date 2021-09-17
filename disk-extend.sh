@@ -4,9 +4,9 @@ echo "> Installing required tools for file system management"
 if  [ -n "$(command -v dnf)" ]; then
     echo ">> Detected dnf-based Linux"
     sudo dnf makecache
-    sudo dnf install -y util-linux
-    sudo dnf install -y lvm2
-    sudo dnf install -y e2fsprogs
+    sudo dnf install --assumeyes --nogpgcheck util-linux
+    sudo dnf install --assumeyes --nogpgcheck lvm2
+    sudo dnf install --assumeyes --nogpgcheck e2fsprogs
 fi
 if [ -n "$(command -v apt-get)" ]; then
     echo ">> Detected apt-based Linux"
