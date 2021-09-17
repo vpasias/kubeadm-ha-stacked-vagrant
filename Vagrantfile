@@ -73,7 +73,6 @@ Vagrant.configure("2") do |config|
 
   config.vm.box               = BOX_IMAGE
   config.vm.box_check_update  = false
-  config.disksize.size        = "100GB"
   config.vbguest.auto_update  = false
 
   config.vm.provider "virtualbox" do |vbox|
@@ -105,6 +104,7 @@ Vagrant.configure("2") do |config|
   (1..CONTROLLER_COUNT).each do |i|
     config.vm.define "c0#{i}" do |controller|
       controller.vm.hostname = "c0#{i}"
+      controller.disksize.size = "100GB"	    
       controller.vm.network :private_network, ip: CONTROLLER_IP_PREFIX + "#{i}"
       controller.vm.provider :virtualbox do |vbox|
         vbox.cpus   = 4
@@ -115,23 +115,19 @@ Vagrant.configure("2") do |config|
         end
         vb.customize [ "storageattach", name , "--storagectl", "SATA Controller", "--port", "1", "--device", "0", "--type", "hdd", "--medium", "c0#{i}.vmdk"]
       end
-    end
-  end
-  
-  (1..CONTROLLER_COUNT).each do |i|
-    config.vm.define "c0#{i}" do |controller|
       controller.vm.provision :shell, path: "disk-extend.sh"
       if i == 1
         controller.vm.provision :shell, inline: $initcontroller
       else
         controller.vm.provision :shell, inline: $joincontroller
-      end
+      end	    
     end
-  end  
-
+  end
+ 
   (1..EXECUTOR_COUNT).each do |i|
     config.vm.define "e0#{i}" do |executor|
       executor.vm.hostname = "e0#{i}"
+      executor.disksize.size = "100GB"	    
       executor.vm.network :private_network, ip: EXECUTOR_IP_PREFIX + "#{i}"
       executor.vm.provider :virtualbox do |vbox|
         vbox.cpus   = 8
@@ -142,14 +138,9 @@ Vagrant.configure("2") do |config|
         end
         vb.customize [ "storageattach", name , "--storagectl", "SATA Controller", "--port", "1", "--device", "0", "--type", "hdd", "--medium", "e0#{i}.vmdk"]
       end
+      executor.vm.provision :shell, path: "disk-extend.sh"     
+      executor.vm.provision :shell, inline: $joinexecutor	    
     end
   end
   
-  (1..EXECUTOR_COUNT).each do |i|
-    config.vm.define "e0#{i}" do |executor|
-      executor.vm.provision :shell, path: "disk-extend.sh"     
-      executor.vm.provision :shell, inline: $joinexecutor
-    end
-  end
-
 end
