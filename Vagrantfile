@@ -145,5 +145,13 @@ Vagrant.configure("2") do |config|
       executor.vm.provision :shell, inline: $joinexecutor	    
     end
   end
+	
+  (1..CONTROLLER_COUNT).each do |i|
+    config.vm.define "c0#{i}" do |controller|
+      if i == 1
+	controller.vm.provision :shell, path: "openebs-install.sh"
+      end	    
+    end
+  end
   
 end
