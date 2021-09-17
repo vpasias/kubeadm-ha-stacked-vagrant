@@ -23,16 +23,14 @@ vagrant ssh c01 -c "sudo kubectl get nodes -o wide --all-namespaces"
 
 vagrant ssh c01 -c "sudo kubectl get pods -o wide --all-namespaces"
 
-vagrant ssh c01 -c "sudo kubectl get pods -n openebs"
+# vagrant ssh c01 -c "sudo kubectl get pods -n openebs"
+
+vagrant ssh c01 -c "sudo kubectl get pod -n rook-ceph"
 
 vagrant ssh c01 -c "sudo kubectl get sc"
 
-vagrant ssh c01 -c "sudo kubectl get blockdevice -n openebs"
-
+# vagrant ssh c01 -c "sudo kubectl get blockdevice -n openebs"
 # vagrant ssh c01 -c "sudo kubectl describe nodes"
-
 # vagrant ssh c01 -c "sudo systemctl status kubelet"
-
 # vagrant ssh c01 -c "sudo journalctl -xeu kubelet"
-
 # vagrant ssh c01 -c "sudo systemctl status containerd"
