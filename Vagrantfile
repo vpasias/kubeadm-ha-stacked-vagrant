@@ -9,10 +9,14 @@ EXECUTOR_COUNT        = 3
 LB_IP_PREFIX          = "192.168.10.1"
 CONTROLLER_IP_PREFIX  = "192.168.10.10"
 EXECUTOR_IP_PREFIX    = "192.168.10.20"
+STORAGE_IP_PREFIX     = "192.168.20.10"
 
 POD_NW_CIDR = "10.244.0.0/16"
 
 TOKEN = "abcdef.0123456789abcdef"
+
+# To be able to add extra disks. To include: /dev/sdb with name: data
+ENV['VAGRANT_EXPERIMENTAL'] = 'disks'
 
 $loadbalancer = <<EOF
 sysctl -w net.ipv4.ip_forward=1       > /dev/null 2>&1
@@ -109,14 +113,10 @@ Vagrant.configure("2") do |config|
       controller.vm.hostname = "c0#{i}"
       controller.disksize.size = "100GB"	    
       controller.vm.network :private_network, ip: CONTROLLER_IP_PREFIX + "#{i}"
+      controller.vm.disk :disk, size: "200GB", name: "data" 
       controller.vm.provider :virtualbox do |vbox|
         vbox.cpus   = 4
         vbox.memory = 16384
-        file_to_disk = "c0#{i}.vmdk"
-        unless File.exist?(file_to_disk)
-	      vbox.customize [ "createmedium", "disk", "--filename", "c0#{i}.vmdk", "--format", "vmdk", "--size", 1024 * 120 ]
-        end
-        vb.customize [ "storageattach", name , "--storagectl", "SATA Controller", "--port", "1", "--device", "0", "--type", "hdd", "--medium", "c0#{i}.vmdk"]
       end
       controller.vm.provision :shell, path: "disk-extend.sh"
       if i == 1
@@ -132,14 +132,11 @@ Vagrant.configure("2") do |config|
       executor.vm.hostname = "e0#{i}"
       executor.disksize.size = "100GB"	    
       executor.vm.network :private_network, ip: EXECUTOR_IP_PREFIX + "#{i}"
+      executor.vm.network :private_network, ip: STORAGE_IP_PREFIX + "#{i}"
+      executor.vm.disk :disk, size: "200GB", name: "data" 	    
       executor.vm.provider :virtualbox do |vbox|
         vbox.cpus   = 8
         vbox.memory = 32768
-        file_to_disk = "e0#{i}.vmdk"
-        unless File.exist?(file_to_disk)
-	      vbox.customize [ "createmedium", "disk", "--filename", "e0#{i}.vmdk", "--format", "vmdk", "--size", 1024 * 120 ]
-        end
-        vb.customize [ "storageattach", name , "--storagectl", "SATA Controller", "--port", "1", "--device", "0", "--type", "hdd", "--medium", "e0#{i}.vmdk"]
       end
       executor.vm.provision :shell, path: "disk-extend.sh"     
       executor.vm.provision :shell, inline: $joinexecutor	    
@@ -149,7 +146,8 @@ Vagrant.configure("2") do |config|
   (1..CONTROLLER_COUNT).each do |i|
     config.vm.define "c0#{i}" do |controller|
       if i == 1
-	controller.vm.provision :shell, path: "openebs-install.sh"
+      #	controller.vm.provision :shell, path: "openebs-install.sh"
+      controller.vm.provision :shell, path: "rook-install.sh"      
       end	    
     end
   end
