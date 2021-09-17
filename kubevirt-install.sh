@@ -1,6 +1,7 @@
 #!/bin/bash
 # https://opensource.com/article/20/9/vms-kubernetes-kubevirt
 # http://kubevirt.io/user-guide/operations/installation/
+# https://www.tigera.io/blog/using-kubernetes-to-orchestrate-vms/
 
 sudo virt-host-validate qemu
 
