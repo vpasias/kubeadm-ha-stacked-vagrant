@@ -9,6 +9,10 @@ cat ./images/multus-daemonset.yml | kubectl apply -f -
 
 cd
 
+sleep 60
+
+kubectl get pods --all-namespaces | grep -i multus
+
 git clone https://github.com/rancher/harvester && cd harvester/deploy/charts
 
 kubectl create ns harvester-system
@@ -22,3 +26,5 @@ helm history harvester -n harvester-system
 kubectl get deploy -n harvester-system
 
 kubectl get svc -n harvester-system
+
+kubectl get pods -n harvester-system
