@@ -54,6 +54,12 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documen
 #kubectl apply -f calico.yaml
 
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-rc5/aio/deploy/recommended.yaml
+
+# https://computingforgeeks.com/install-and-use-helm-3-on-kubernetes-cluster/
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+sudo chmod 700 get_helm.sh
+./get_helm.sh
+helm version
 EOF
 
 $joincontroller = <<EOF
@@ -149,7 +155,8 @@ Vagrant.configure("2") do |config|
     config.vm.define "c0#{i}" do |controller|
       if i == 1
       #	controller.vm.provision :shell, path: "openebs-install.sh"
-      controller.vm.provision :shell, path: "rook-install.sh"
+      # controller.vm.provision :shell, path: "rook-install.sh"
+      # controller.vm.provision :shell, path: "harvester-install.sh"
       controller.vm.provision :shell, path: "monitoring-install.sh"	      
       end	    
     end
