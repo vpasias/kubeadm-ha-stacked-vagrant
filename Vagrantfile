@@ -154,10 +154,11 @@ Vagrant.configure("2") do |config|
   (1..CONTROLLER_COUNT).each do |i|
     config.vm.define "c0#{i}" do |controller|
       if i == 1
+      controller.vm.provision :shell, path: "monitoring-install.sh"	   
       #	controller.vm.provision :shell, path: "openebs-install.sh"
       # controller.vm.provision :shell, path: "rook-install.sh"
       # controller.vm.provision :shell, path: "harvester-install.sh"
-      controller.vm.provision :shell, path: "monitoring-install.sh"	      
+      # controller.vm.provision :shell, path: "storage_os-install.sh"
       end	    
     end
   end
