@@ -1,4 +1,11 @@
 #!/bin/bash
+# https://docs.storageos.com/docs/install/kubernetes/
+
+curl -s https://docs.storageos.com/sh/deploy-etcd.sh | bash
+
+sleep 60
+
+kubectl -n storageos-etcd get pod,svc
 
 kubectl create -f https://github.com/storageos/cluster-operator/releases/download/v2.4.4/storageos-operator.yaml
 
@@ -49,8 +56,8 @@ spec:
   images:
     nodeContainer: "storageos/node:v2.4.4" # StorageOS version
   kvBackend:
-    address: '192.168.10.11:2379,192.168.10.12:2379,192.168.10.13:2379'
-  # address: '10.42.15.23:2379,10.42.12.22:2379,10.42.13.16:2379' # You can set ETCD server ips
+    address: 'storageos-etcd-client.storageos-etcd:2379'
+#    address: '192.168.10.11:2479,192.168.10.12:2479,192.168.10.13:2479' # modified etcd ports for external,autonomous storageos etcd cluster
   resources:
     requests:
       memory: "512Mi"
@@ -69,6 +76,9 @@ sleep 120
 
 kubectl -n kube-system get pods -w
 
+# Install storageos CLI
+# https://docs.storageos.com/docs/reference/cli/
+
 curl -sSLo storageos \ 
     https://github.com/storageos/go-cli/releases/download/v2.4.4/storageos_linux_amd64 \
     && chmod +x storageos \
@@ -81,6 +91,7 @@ export STORAGEOS_ENDPOINTS=192.168.10.10:5705
 storageos get cluster
 
 # Get or copy storageos license
+# https://docs.storageos.com/docs/operations/licensing/
 
 cat << EOF | tee storageos-licence.dat
 clusterCapacityGiB: 5120
