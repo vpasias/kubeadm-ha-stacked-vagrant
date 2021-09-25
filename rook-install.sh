@@ -10,11 +10,11 @@ kubectl create -f crds.yaml -f common.yaml
 
 kubectl create -f operator.yaml
 
-sleep 30
+sleep 60
 
 kubectl create -f cluster.yaml
 
-sleep 120
+sleep 180
 
 kubectl get pod -n rook-ceph
 
