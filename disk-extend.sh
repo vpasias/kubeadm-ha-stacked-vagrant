@@ -24,9 +24,10 @@ echo "The root file system (/) has a size of $ROOT_FS_SIZE"
 echo "> Increasing disk size of $ROOT_DISK_DEVICE to available maximum"
 sudo fdisk $ROOT_DISK_DEVICE <<EOF
 d 
+2
 n
 p
-1
+2
 2048
 
 no
