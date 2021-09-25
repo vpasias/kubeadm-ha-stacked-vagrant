@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
         dnf --assumeyes --nogpgcheck install \
             device-mapper-persistent-data \
             iproute-tc \
-            lvm2 util-linux e2fsprogs
+            lvm2 util-linux e2fsprogs git vim wget curl
 
         cp /vagrant/files/docker-ce.repo /etc/yum.repos.d/docker-ce.repo
         cp /vagrant/files/kubernetes.repo /etc/yum.repos.d/kubernetes.repo
