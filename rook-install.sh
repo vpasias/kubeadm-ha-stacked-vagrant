@@ -14,7 +14,7 @@ sleep 30
 
 kubectl create -f cluster.yaml
 
-sleep 60
+sleep 120
 
 kubectl get pod -n rook-ceph
 
