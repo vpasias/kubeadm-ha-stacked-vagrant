@@ -21,7 +21,7 @@ ENV['VAGRANT_EXPERIMENTAL'] = 'disks'
 $common = <<EOF
 lsblk
 dnf -y install cloud-utils-growpart gdisk
-growpart /dev/sda 1
+growpart /dev/sda 2
 lsblk
 xfs_growfs /
 df -hT | grep /dev/sda
