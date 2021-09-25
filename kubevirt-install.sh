@@ -3,7 +3,8 @@
 # http://kubevirt.io/user-guide/operations/installation/
 # https://www.tigera.io/blog/using-kubernetes-to-orchestrate-vms/
 
-sudo virt-host-validate qemu
+# sudo virt-host-validate qemu
+cat /sys/module/kvm_intel/parameters/nested
 
 export KUBEVIRT_VERSION="v0.45.0"
 
