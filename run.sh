@@ -31,9 +31,9 @@ vagrant ssh c01 -c "sudo kubectl get pods -o wide --all-namespaces"
 
 vagrant ssh c01 -c "sudo kubectl get sc"
 
-vagrant ssh c01 -c "kubectl get pods -n monitoring"
+vagrant ssh c01 -c "sudo kubectl get pods -n monitoring"
 
-vagrant ssh c01 -c "kubectl get svc -n monitoring"
+vagrant ssh c01 -c "sudo kubectl get svc -n monitoring"
 
 # vagrant ssh c01 -c "sudo kubectl get blockdevice -n openebs"
 # vagrant ssh c01 -c "sudo kubectl describe nodes"
