@@ -55,11 +55,10 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documen
 
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-rc5/aio/deploy/recommended.yaml
 
-# https://computingforgeeks.com/install-and-use-helm-3-on-kubernetes-cluster/
-curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-sudo chmod 777 get_helm.sh
-./get_helm.sh
-helm version
+#https://blog.mphomphego.co.za/blog/2021/02/01/Install-Prometheus-and-Grafana-with-helm-3-on-Kubernetes-cluster-running-on-Vagrant-VM.html
+echo "******** Begin installing helm ********"
+curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+echo "******** End installing helm ********"
 EOF
 
 $joincontroller = <<EOF
