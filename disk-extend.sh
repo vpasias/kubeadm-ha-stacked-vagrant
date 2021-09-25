@@ -23,12 +23,13 @@ ROOT_FS_SIZE=`df -h / | sed -n 2p | awk '{print $2;}'`
 echo "The root file system (/) has a size of $ROOT_FS_SIZE"
 echo "> Increasing disk size of $ROOT_DISK_DEVICE to available maximum"
 sudo fdisk $ROOT_DISK_DEVICE <<EOF
-p
+d 
 n
 p
-2
+1
 2048
-p
+
+no
 w
 EOF
 sudo pvresize $ROOT_DISK_DEVICE_PART
