@@ -18,6 +18,13 @@ TOKEN = "abcdef.0123456789abcdef"
 # To be able to add extra disks. To include: /dev/sdb with name: data
 ENV['VAGRANT_EXPERIMENTAL'] = 'disks'
 
+$common = <<EOF
+sudo parted /dev/sda resizepart 2 100%
+sudo pvresize /dev/sda2
+sudo lvextend -l +100%FREE /dev/centos/root
+sudo xfs_growfs /dev/centos/root
+EOF
+
 $loadbalancer = <<EOF
 sysctl -w net.ipv4.ip_forward=1       > /dev/null 2>&1
 sysctl -w net.ipv4.ip_nonlocal_bind=1 > /dev/null 2>&1
@@ -118,14 +125,14 @@ Vagrant.configure("2") do |config|
   (1..CONTROLLER_COUNT).each do |i|
     config.vm.define "c0#{i}" do |controller|
       controller.vm.hostname = "c0#{i}"
- #     controller.disksize.size = "100GB"	    
+      controller.disksize.size = "120GB"	    
       controller.vm.network :private_network, ip: CONTROLLER_IP_PREFIX + "#{i}"
       controller.vm.disk :disk, size: "200GB", name: "data" 
       controller.vm.provider :virtualbox do |vbox|
         vbox.cpus   = 4
         vbox.memory = 16384
       end
-#      controller.vm.provision :shell, path: "disk-extend.sh"
+      controller.vm.provision :shell, inline: $common
       if i == 1
         controller.vm.provision :shell, inline: $initcontroller
       else
@@ -137,7 +144,7 @@ Vagrant.configure("2") do |config|
   (1..EXECUTOR_COUNT).each do |i|
     config.vm.define "e0#{i}" do |executor|
       executor.vm.hostname = "e0#{i}"
-#      executor.disksize.size = "100GB"	    
+      executor.disksize.size = "120GB"	    
       executor.vm.network :private_network, ip: EXECUTOR_IP_PREFIX + "#{i}"
       executor.vm.network :private_network, ip: STORAGE_IP_PREFIX + "#{i}"
       executor.vm.disk :disk, size: "200GB", name: "data" 	    
@@ -145,7 +152,7 @@ Vagrant.configure("2") do |config|
         vbox.cpus   = 8
         vbox.memory = 32768
       end
-#      executor.vm.provision :shell, path: "disk-extend.sh"     
+      executor.vm.provision :shell, inline: $common
       executor.vm.provision :shell, inline: $joinexecutor	    
     end
   end
