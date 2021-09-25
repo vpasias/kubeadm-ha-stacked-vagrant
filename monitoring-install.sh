@@ -9,7 +9,7 @@ kubectl create -f manifests/setup
 
 kubectl get ns monitoring
 
-sleep 300
+sleep 120
 
 kubectl get pods -n monitoring
 
