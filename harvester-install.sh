@@ -17,11 +17,11 @@ git clone https://github.com/rancher/harvester && cd harvester/deploy/charts
 
 kubectl create ns harvester-system
 
-helm install harvester harvester --namespace harvester-system --set longhorn.enabled=true,minio.persistence.storageClass=longhorn,service.harvester.type=NodePort
+/usr/local/bin/helm install harvester harvester --namespace harvester-system --set longhorn.enabled=true,minio.persistence.storageClass=longhorn,service.harvester.type=NodePort
 
 cd
 
-helm history harvester -n harvester-system
+/usr/local/bin/helm history harvester -n harvester-system
 
 kubectl get deploy -n harvester-system
 
