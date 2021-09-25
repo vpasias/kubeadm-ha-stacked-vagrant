@@ -10,11 +10,11 @@ kubectl create -f crds.yaml -f common.yaml
 
 kubectl create -f operator.yaml
 
-sleep 120
+sleep 30
 
 kubectl create -f cluster.yaml
 
-sleep 300
+sleep 60
 
 kubectl apply -f ./csi/rbd/storageclass.yaml
 
