@@ -21,4 +21,4 @@ VERSION=$(kubectl get kubevirt.kubevirt.io/kubevirt -n kubevirt -o=jsonpath="{.s
 curl -L -o virtctl https://github.com/kubevirt/kubevirt/releases/download/${VERSION}/virtctl-${VERSION}-linux-amd64
 chmod +x virtctl
 sudo install virtctl /usr/local/bin
-virtctl version
+/usr/local/bin/virtctl version
