@@ -1,7 +1,7 @@
 #!/bin/bash
 # https://computingforgeeks.com/setup-prometheus-and-grafana-on-kubernetes/
 
-dnf install --assumeyes --nogpgcheck git vim
+dnf install --assumeyes --nogpgcheck git vim wget curl
 
 git clone https://github.com/prometheus-operator/kube-prometheus.git && cd kube-prometheus
 
