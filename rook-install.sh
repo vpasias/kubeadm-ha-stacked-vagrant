@@ -90,3 +90,7 @@ kubectl create -f toolbox.yaml
 # ceph status
 # ceph osd status
 # ceph df
+
+# Test Rook
+# kubectl apply -f https://luc.run/ghost-with-pvc.yaml
+# kubectl get pv,pvc
