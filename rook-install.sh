@@ -20,6 +20,8 @@ kubectl get pod -n rook-ceph
 
 kubectl apply -f ./csi/rbd/storageclass.yaml
 
+kubectl get sc
+
 kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
 
 kubectl patch storageclass rook-ceph-block -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
