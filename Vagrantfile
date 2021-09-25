@@ -18,13 +18,6 @@ TOKEN = "abcdef.0123456789abcdef"
 # To be able to add extra disks. To include: /dev/sdb with name: data
 ENV['VAGRANT_EXPERIMENTAL'] = 'disks'
 
-$common = <<EOF
-sudo parted /dev/sda resizepart 2 100%
-sudo pvresize /dev/sda2
-sudo lvextend -l +100%FREE /dev/centos/root
-sudo xfs_growfs /dev/centos/root
-EOF
-
 $loadbalancer = <<EOF
 sysctl -w net.ipv4.ip_forward=1       > /dev/null 2>&1
 sysctl -w net.ipv4.ip_nonlocal_bind=1 > /dev/null 2>&1
@@ -132,7 +125,6 @@ Vagrant.configure("2") do |config|
         vbox.cpus   = 4
         vbox.memory = 16384
       end
-      controller.vm.provision :shell, inline: $common
       if i == 1
         controller.vm.provision :shell, inline: $initcontroller
       else
@@ -152,7 +144,6 @@ Vagrant.configure("2") do |config|
         vbox.cpus   = 8
         vbox.memory = 32768
       end
-      executor.vm.provision :shell, inline: $common
       executor.vm.provision :shell, inline: $joinexecutor	    
     end
   end
