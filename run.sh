@@ -17,6 +17,8 @@ KUBERNETES_VERSION=${KUBERNETES_VERSION} vagrant up
 #vagrant up lb01 c01 e01 e02 e03
 #vagrant up lb01 c01 e01 e02
 
+vagrant status
+
 sleep 60
 
 vagrant ssh c01 -c "sudo kubectl get nodes -o wide --all-namespaces"
