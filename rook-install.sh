@@ -84,3 +84,9 @@ spec:
 EOF
 
 kubectl create -f toolbox.yaml
+
+# Access Rook toolbox
+# kubectl -n rook-ceph exec -it deploy/rook-ceph-tools -- bash
+# ceph status
+# ceph osd status
+# ceph df
