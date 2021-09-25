@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
 
         dnf --assumeyes --nogpgcheck install \
             haproxy \
-            keepalived
+            keepalived git vim wget curl
 
         sysctl --system
 
