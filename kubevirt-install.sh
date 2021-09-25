@@ -6,6 +6,8 @@
 # sudo virt-host-validate qemu
 cat /sys/module/kvm_intel/parameters/nested
 
+mkdir -p kubevirt && cd kubevirt
+
 export KUBEVIRT_VERSION="v0.45.0"
 
 wget https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-operator.yaml
