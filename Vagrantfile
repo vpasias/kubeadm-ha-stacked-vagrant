@@ -150,7 +150,7 @@ Vagrant.configure("2") do |config|
     end
   end
 
-# Additional functions/appiliacations	
+# Additional functions/applications	
   (1..CONTROLLER_COUNT).each do |i|
     config.vm.define "c0#{i}" do |controller|
       if i == 1
