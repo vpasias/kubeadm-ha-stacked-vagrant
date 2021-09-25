@@ -64,11 +64,10 @@ kubectl apply -f calico.yaml
 
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-rc5/aio/deploy/recommended.yaml
 
-#https://blog.mphomphego.co.za/blog/2021/02/01/Install-Prometheus-and-Grafana-with-helm-3-on-Kubernetes-cluster-running-on-Vagrant-VM.html
-echo "******** Begin installing helm ******"
 PATH=$PATH:/usr/local/bin
 curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-echo "******** End installing helm ********"
+
+echo "******** End of procedure ********"
 EOF
 
 $joincontroller = <<EOF
@@ -82,6 +81,8 @@ kubeadm join #{CONTROL_PLANE_IP}:6443 \
   --token ${TOKEN} \
   --discovery-token-ca-cert-hash sha256:${DISCOVERY_TOKEN_CA_CERT_HASH} \
   --certificate-key ${CERTIFICATE_KEY}
+
+echo "******** End of procedure ********"
 EOF
 
 $joinexecutor = <<EOF
@@ -90,6 +91,8 @@ DISCOVERY_TOKEN_CA_CERT_HASH=`cat /vagrant/params/discovery-token-ca-cert-hash`
 kubeadm join #{CONTROL_PLANE_IP}:6443 \
   --token ${TOKEN} \
   --discovery-token-ca-cert-hash sha256:${DISCOVERY_TOKEN_CA_CERT_HASH}
+
+echo "******** End of procedure ********"
 EOF
 
 Vagrant.configure("2") do |config|
