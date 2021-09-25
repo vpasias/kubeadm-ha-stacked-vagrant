@@ -57,7 +57,7 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-r
 
 # https://computingforgeeks.com/install-and-use-helm-3-on-kubernetes-cluster/
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-sudo chmod 700 get_helm.sh
+sudo chmod 777 get_helm.sh
 ./get_helm.sh
 helm version
 EOF
