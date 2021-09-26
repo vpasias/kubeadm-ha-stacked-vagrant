@@ -1,6 +1,8 @@
 #!/bin/bash
 # https://docs.storageos.com/docs/install/kubernetes/
 
+mkdir -p storageos && cd storageos
+
 curl -s https://docs.storageos.com/sh/deploy-etcd.sh | bash
 
 sleep 60
