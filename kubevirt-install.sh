@@ -15,6 +15,9 @@ kubectl apply -f kubevirt-operator.yaml
 kubectl create configmap kubevirt-config -n kubevirt --from-literal debug-useEmulation=true
 wget https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-cr.yaml
 kubectl apply -f kubevirt-cr.yaml
+
+sleep 120
+
 kubectl get pods -n kubevirt
 
 VERSION=$(kubectl get kubevirt.kubevirt.io/kubevirt -n kubevirt -o=jsonpath="{.status.observedKubeVirtVersion}")
