@@ -479,9 +479,13 @@ data:
   kupenstack.yaml: |
     spec:
       controlNodes:
-        - kind-control-plane
+        - c01
+        - c02
+        - c03
       computeNodes:
-        - kind-control-plane
+        - e01
+        - e02
+        - e03
 ---
 apiVersion: apps/v1
 kind: Deployment
