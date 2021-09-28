@@ -40,3 +40,5 @@ vagrant ssh c01 -c "sudo kubectl get svc -n monitoring"
 # vagrant ssh c01 -c "sudo systemctl status kubelet"
 # vagrant ssh c01 -c "sudo journalctl -xeu kubelet"
 # vagrant ssh c01 -c "sudo systemctl status containerd"
+
+vagrant ssh c01 -c "sudo ps aux | grep /usr/bin/kubelet | grep -v grep"
