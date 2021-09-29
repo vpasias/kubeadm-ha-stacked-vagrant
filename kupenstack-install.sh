@@ -6,7 +6,13 @@ kubectl get nodes
 
 kubectl apply -f https://raw.githubusercontent.com/vpasias/kubeadm-ha-stacked-vagrant/master/kupenstack-controller-manager.yaml
 
+sleep 60
+
 kubectl get pods -n kupenstack-control
+
+sleep 600
+
+kubectl get pods -n kupenstack
 
 kubectl apply -f https://raw.githubusercontent.com/vpasias/kubeadm-ha-stacked-vagrant/master/vm-sample.yaml
 
