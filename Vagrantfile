@@ -40,7 +40,6 @@ $initcontroller = <<EOF
 # set -x
 kubeadm init \
   --apiserver-advertise-address=192.168.10.101 \
-  --allow-privileged=true \
   --control-plane-endpoint=#{CONTROL_PLANE_IP} \
   --pod-network-cidr=#{POD_NW_CIDR} \
   --token #{TOKEN} \
@@ -79,7 +78,6 @@ DISCOVERY_TOKEN_CA_CERT_HASH=`cat /vagrant/params/discovery-token-ca-cert-hash`
 CERTIFICATE_KEY=`cat /vagrant/params/certificate-key`
 kubeadm join #{CONTROL_PLANE_IP}:6443 \
   --control-plane \
-  --allow-privileged=true \
   --apiserver-advertise-address $(/sbin/ip -o -4 addr list eth1 | awk '{print $4}' | cut -d/ -f1) \
   --token ${TOKEN} \
   --discovery-token-ca-cert-hash sha256:${DISCOVERY_TOKEN_CA_CERT_HASH} \
@@ -93,7 +91,6 @@ TOKEN=`cat /vagrant/params/token`
 DISCOVERY_TOKEN_CA_CERT_HASH=`cat /vagrant/params/discovery-token-ca-cert-hash`
 kubeadm join #{CONTROL_PLANE_IP}:6443 \
   --token ${TOKEN} \
-  --allow-privileged=true \
   --discovery-token-ca-cert-hash sha256:${DISCOVERY_TOKEN_CA_CERT_HASH}
 
 echo "******** End of procedure ********"
