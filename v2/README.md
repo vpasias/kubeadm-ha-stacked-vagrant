@@ -18,15 +18,14 @@ To use kubectl on the master node, run:
 
 vagrant ssh master # use master1 if you are running ha cluster
 
-mkdir -p $HOME/.kube
-sudo cp -Rf /etc/kubernetes/admin.conf $HOME/.kube/config
+mkdir -p $HOME/.kube && \
+sudo cp -Rf /etc/kubernetes/admin.conf $HOME/.kube/config && \
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-kubectl cluster-info
-kubectl get nodes
+kubectl cluster-info && kubectl get nodes
 
 Pod Network
 
-    Reference: Installing a Pod network add-on
-    kube-flannel.yml changes: added the --iface option (ref)
+Reference: Installing a Pod network add-on
+kube-flannel.yml changes: added the --iface option (ref)
 
