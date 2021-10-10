@@ -18,9 +18,7 @@ To use kubectl on the master node, run:
 
 vagrant ssh master # use master1 if you are running ha cluster
 
-mkdir -p $HOME/.kube && \
-sudo cp -Rf /etc/kubernetes/admin.conf $HOME/.kube/config && \
-sudo chown $(id -u):$(id -g) $HOME/.kube/config
+mkdir -p $HOME/.kube && sudo cp -Rf /etc/kubernetes/admin.conf $HOME/.kube/config && sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 kubectl cluster-info && kubectl get nodes
 
