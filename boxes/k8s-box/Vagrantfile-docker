@@ -34,6 +34,10 @@ Vagrant.configure("2") do |config|
         
         dnf --assumeyes --nogpgcheck install      \
             containerd.io-#{CONTAINERD_VERSION} docker-ce docker-ce-cli
+            
+        echo '{
+          "exec-opts": ["native.cgroupdriver=systemd"]
+        }' > /etc/docker/daemon.json
         
         systemctl daemon-reload 
         systemctl restart docker
