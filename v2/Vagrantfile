@@ -83,8 +83,8 @@ mkdir -p $HOME/.kube
 sudo cp -Rf /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 # kubectl apply -f /vagrant/kube-flannel.yml
-# kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-kubectl apply -f /vagrant/calico.yaml
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+# kubectl apply -f /vagrant/calico.yaml
 
 SCRIPT
 
@@ -206,8 +206,8 @@ EOF
   
   status "installing flannel network addon.."
   # kubectl apply -f /vagrant/kube-flannel.yml
-  # kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-  kubectl apply -f /vagrant/calico.yaml
+  kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+  # kubectl apply -f /vagrant/calico.yaml
 else
   status "joining master node.."
   discovery_token_ca_cert_hash="$(grep 'discovery-token-ca-cert-hash' /vagrant/kubeadm.log | head -n1 | awk '{print $2}')"
