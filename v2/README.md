@@ -14,9 +14,9 @@ Usage
 
 Run vagrant up and wait for the cluster to be set up (change MASTER_COUNT to 3 to run a ha cluster).
 
-To use kubectl on the master node, run:
+To use kubectl on the master1 node, run:
 
-vagrant ssh master # use master1 if you are running ha cluster
+vagrant ssh master1
 
 mkdir -p $HOME/.kube && sudo cp -Rf /etc/kubernetes/admin.conf $HOME/.kube/config && sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
