@@ -24,7 +24,7 @@ Vagrant.configure("2") do |config|
         dnf --assumeyes --nogpgcheck install \
             device-mapper-persistent-data \
             iproute-tc \
-            lvm2 util-linux e2fsprogs git vim wget curl cloud-utils-growpart gdisk
+            lvm2 util-linux e2fsprogs git vim wget curl cloud-utils-growpart gdisk bash-completion yum-utils
         cp /vagrant/files/kubernetes.repo /etc/yum.repos.d/kubernetes.repo
 
         VERSION=1.22
