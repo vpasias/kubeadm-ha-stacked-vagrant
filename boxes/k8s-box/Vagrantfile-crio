@@ -1,6 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 # https://computingforgeeks.com/install-cri-o-container-runtime-on-centos-linux/
+# https://arabitnetwork.com/2021/02/20/install-kubernetes-with-cri-o-on-centos-7-step-by-step/
 
 KUBERNETES_VERSION = ENV["KUBERNETES_VERSION"]
 
